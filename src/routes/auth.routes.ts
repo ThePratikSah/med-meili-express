@@ -28,7 +28,9 @@ router.post(
       return res.status(401).json({ msg: "Invalid credentials" });
     }
 
-    const token = generateJWT(email);
+    const { _id } = user;
+
+    const token = generateJWT(email, _id.toString());
     return res.status(201).json({ msg: "Authenticated", token });
   })
 );
