@@ -4,9 +4,6 @@ import { asyncHandler } from "../utils";
 
 export const router = Router();
 
-/**
- * this route will be getting all the categories and return the value
- */
 router.get(
   "/",
   asyncHandler(async (req: Request, res: Response) => {
@@ -14,9 +11,6 @@ router.get(
   })
 );
 
-/**
- * this will be helping in creating new categories
- */
 router.post(
   "/",
   asyncHandler(async (req: Request, res: Response) => {

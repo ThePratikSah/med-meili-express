@@ -1,4 +1,4 @@
-import { db } from "../../database";
+import { getDB } from "../../database";
 
 export async function addNewProduct(
   title: string,
@@ -7,16 +7,4 @@ export async function addNewProduct(
   sellingPrice: number,
   categoryId: number,
   discountId: number
-) {
-  await db
-    .insertInto("Product")
-    .values({
-      title,
-      description,
-      price,
-      sellingPrice,
-      categoryId,
-      discountId,
-    })
-    .execute();
-}
+) {}

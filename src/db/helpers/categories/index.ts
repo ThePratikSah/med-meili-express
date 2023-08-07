@@ -1,8 +1,9 @@
-import { db } from "../../database";
+import { getDB } from "../../database";
 
 export async function getAllCategories() {
-  let query = db.selectFrom("Category");
-  return await query.selectAll().execute();
+  const db = getDB();
+  const category = db.collection("Category");
+  return await category.find().toArray();
 }
 
 export async function addNewCategory(
@@ -10,12 +11,11 @@ export async function addNewCategory(
   desc: string,
   imageUrl: string
 ) {
-  await db
-    .insertInto("Category")
-    .values({
-      title,
-      desc,
-      imageUrl,
-    })
-    .execute();
+  const db = getDB();
+  const category = db.collection("Category");
+  return await category.insertOne({
+    title,
+    desc,
+    imageUrl,
+  });
 }

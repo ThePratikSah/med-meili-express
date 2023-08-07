@@ -1,17 +1,31 @@
-import { DB } from "./types";
-import { Pool } from "pg";
-import { Kysely, PostgresDialect } from "kysely";
+import { MongoClient, Db, ServerApiVersion } from "mongodb";
 
-const dialect = new PostgresDialect({
-  pool: new Pool({
-    database: "med-meili-express",
-    host: "localhost",
-    user: "postgres",
-    port: 5432,
-    max: 10,
-  }),
-});
+const uri = "mongodb://localhost:27017";
+export let _db: Db;
+export const connectDB = async () => {
+  if (_db) {
+    console.log("Already connected to database");
+    return Promise.resolve();
+  }
 
-export const db = new Kysely<DB>({
-  dialect,
-});
+  try {
+    const client = new MongoClient(uri, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
+    });
+
+    await client.connect();
+
+    console.log("[MongoDB connection] SUCCESS");
+
+    _db = client.db("med-meili-express");
+  } catch (e) {
+    console.error(`[MongoDB connection] ERROR: ${e}`);
+    throw e;
+  }
+};
+
+export const getDB = () => _db;
