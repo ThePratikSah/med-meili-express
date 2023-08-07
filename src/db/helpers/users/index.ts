@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { getDB } from "../../database";
+import { client } from "../../redis";
 
 export async function findUserById(id: string) {
   const db = getDB();
@@ -22,5 +23,14 @@ export async function addNewUser(email: string, password: string) {
   return await user.insertOne({
     email,
     password,
+    createdAt: new Date().getTime(),
   });
+}
+
+export async function getUserFromRedis(_id: string) {
+  return await client.get(`user:${_id}`);
+}
+
+export async function setUserInRedis(_id: string, email: string) {
+  return await client.set(`user:${_id}`, email);
 }

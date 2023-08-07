@@ -7,6 +7,7 @@ export const router = Router();
 
 router.get(
   "/",
+  asyncHandler(auth),
   asyncHandler(async (req: Request, res: Response) => {
     return res.json({ data: await getAllCategories() });
   })

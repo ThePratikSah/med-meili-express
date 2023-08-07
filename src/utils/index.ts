@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { IDecodedTokenData } from "../interface/auth";
+import { env } from "../config/env";
 
 export function asyncHandler(fn: any) {
   return function (req: Request, res: Response, next: NextFunction) {
@@ -10,7 +11,7 @@ export function asyncHandler(fn: any) {
 }
 
 export async function hashPassword(password: string) {
-  const salt = await bcrypt.genSalt(10); // TODO: replace the 10 with env value
+  const salt = await bcrypt.genSalt(+env.SALT_ROUNDS);
   return await bcrypt.hash(password, salt);
 }
 
@@ -19,11 +20,11 @@ export async function compareHashPassword(password: string, hash: string) {
 }
 
 export function generateJWT(email: string, _id: string) {
-  return jwt.sign({ email, _id }, "some_random_key", {
+  return jwt.sign({ email, _id }, env.JWT_SECRET_KEY, {
     expiresIn: "24h",
-  }); // TODO: remove this from here and get it from env
+  });
 }
 
 export function validateJWT(token: string) {
-  return jwt.verify(token, "some_random_key") as IDecodedTokenData; // TODO: remove this from here and get it from env
+  return jwt.verify(token, env.JWT_SECRET_KEY) as IDecodedTokenData;
 }

@@ -1,12 +1,13 @@
-import { Router, Request, Response } from "express";
+import { Router, Response } from "express";
 import {
   asyncHandler,
   compareHashPassword,
   generateJWT,
   hashPassword,
 } from "../utils";
-import { IAuthRequest } from "../interface/auth";
+import { IAuthRequest, IRequest } from "../interface/auth";
 import { addNewUser, findUserByEmail } from "../db/helpers/users";
+import { auth } from "../middleware/authentication";
 
 export const router = Router();
 
@@ -31,7 +32,12 @@ router.post(
     const { _id } = user;
 
     const token = generateJWT(email, _id.toString());
-    return res.status(201).json({ msg: "Authenticated", token });
+    res.cookie("api-auth", token, {
+      secure: false,
+      httpOnly: true,
+      expires: new Date(Date.now() + 8 * 3600000),
+    });
+    return res.status(201).json({ msg: "Authenticated" });
   })
 );
 
@@ -49,5 +55,14 @@ router.post(
 
     const { insertedId } = await addNewUser(email, hash);
     return res.status(201).json({ msg: "User created", userId: insertedId });
+  })
+);
+
+router.post(
+  "/signout",
+  asyncHandler(auth),
+  asyncHandler(async (req: IRequest, res: Response) => {
+    res.clearCookie("api-auth");
+    return res.json({ message: "Logged out!" });
   })
 );
