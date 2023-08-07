@@ -12,8 +12,7 @@ export async function auth(req: IRequest, _: Response, next: NextFunction) {
   const token = req.cookies["api-auth"];
 
   if (!token) {
-    const error = new ErrorWithCode("Not Authorized", 401);
-    return next(error);
+    throw new ErrorWithCode("Not authorized", 401);
   }
 
   let decodedData: IDecodedTokenData;
@@ -21,8 +20,7 @@ export async function auth(req: IRequest, _: Response, next: NextFunction) {
   try {
     decodedData = validateJWT(token);
   } catch (_) {
-    const error = new ErrorWithCode("Not Authorized", 401);
-    return next(error);
+    throw new ErrorWithCode("Not authorized", 401);
   }
 
   const { _id } = decodedData;
@@ -31,8 +29,7 @@ export async function auth(req: IRequest, _: Response, next: NextFunction) {
   if (!email) {
     const user = await findUserById(_id);
     if (!user) {
-      const error = new ErrorWithCode("Not Authorized", 401);
-      return next(error);
+      throw new ErrorWithCode("Not authorized", 401);
     }
     email = user?.email;
     await setUserInRedis(_id, email!);

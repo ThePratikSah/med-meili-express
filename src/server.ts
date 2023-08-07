@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import { router as categoriesRoutes } from "./routes/category.routes";
 import { router as authRoutes } from "./routes/auth.routes";
@@ -16,10 +16,8 @@ app.use(cookieParser());
 app.use("/auth", authRoutes);
 app.use("/categories", categoriesRoutes);
 
-app.use((err: ErrorWithCode, req: Request, res: Response) => {
-  const { status, message } = err;
-  console.log({ status, message });
-  res.status(status).json({ error: message || "Something went wrong" });
+app.use((err: ErrorWithCode, _req: Request, res: Response, _: NextFunction) => {
+  return res.status(err.status).json({ error: err.message });
 });
 
 (async () => {
