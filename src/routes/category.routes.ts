@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { addNewCategory, getAllCategories } from "../db/helpers/categories";
 import { asyncHandler } from "../utils";
+import { auth } from "../middleware/authentication";
 
 export const router = Router();
 
@@ -13,6 +14,7 @@ router.get(
 
 router.post(
   "/",
+  asyncHandler(auth),
   asyncHandler(async (req: Request, res: Response) => {
     const { title, desc, imageUrl } = req.body;
     await addNewCategory(title, desc, imageUrl);

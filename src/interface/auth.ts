@@ -6,3 +6,13 @@ export interface IAuthRequest extends Request {
     password: string;
   };
 }
+
+export interface IRequest extends Request {
+  _id: string;
+  email: string;
+}
+
+export interface IDecodedTokenData {
+  email: string;
+  _id: string;
+}
