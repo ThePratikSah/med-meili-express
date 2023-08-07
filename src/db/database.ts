@@ -22,6 +22,8 @@ export const connectDB = async () => {
     console.log("[MongoDB connection] SUCCESS");
 
     _db = client.db("med-meili-express");
+    _db.collection("User").createIndex({ email: 1 }, { unique: true });
+    console.log("[Index] Email indexed");
   } catch (e) {
     console.error(`[MongoDB connection] ERROR: ${e}`);
     throw e;
