@@ -17,8 +17,17 @@ app.use("/auth", authRoutes);
 app.use("/categories", categoriesRoute);
 app.use("/products", productsRoute);
 
+app.use((_req, _res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
+
 app.use((err, _req, res, _) => {
-  return res.status(err.status).json({ error: err.message });
+  res.locals.error = err;
+  const status = err.status || 500;
+  res.status(status);
+  res.json({ error: err.message });
 });
 
 (async () => {
