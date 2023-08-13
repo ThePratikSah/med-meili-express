@@ -12,8 +12,11 @@ export async function findUserById(id) {
 export async function findUserByEmail(email) {
   const db = getDB();
   const user = db.collection("User");
+  const options = {
+    projection: { password: 0 },
+  };
 
-  return await user.findOne({ email });
+  return await user.findOne({ email }, options);
 }
 
 export async function addNewUser(email, password) {

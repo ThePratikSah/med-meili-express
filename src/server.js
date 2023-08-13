@@ -4,6 +4,7 @@ import cors from "cors";
 import { router as categoriesRoute } from "./routes/category.routes.js";
 import { router as productsRoute } from "./routes/product.routes.js";
 import { router as authRoutes } from "./routes/auth.routes.js";
+import { router as userRoutes } from "./routes/user.routes.js";
 import { connectDB } from "./db/database.js";
 import { redisConnect, redisDisconnect } from "./db/redis.js";
 import { env } from "./config/env.js";
@@ -24,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/auth", authRoutes);
+app.use("/user", userRoutes);
 app.use("/categories", categoriesRoute);
 app.use("/products", productsRoute);
 
