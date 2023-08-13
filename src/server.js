@@ -6,11 +6,19 @@ import { router as productsRoute } from "./routes/product.routes.js";
 import { router as authRoutes } from "./routes/auth.routes.js";
 import { connectDB } from "./db/database.js";
 import { redisConnect, redisDisconnect } from "./db/redis.js";
+import { env } from "./config/env.js";
 
 const app = express();
 const port = 3000;
 
-app.options("*", cors());
+const corsOptions = {
+  origin: env.DASHBOARD_ORIGIN, // This is the front-end origin
+  credentials: true, // This is important.
+  methods: "OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE",
+  allowedHeaders: "Content-Type, Authorization, X-Requested-With",
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

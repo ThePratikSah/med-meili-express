@@ -6,4 +6,5 @@ export const env = {
   MEILI_SEARCH_HOST: process.env.MEILI_SEARCH_HOST || "https://theopen.blog",
   MEILI_SEARCH_API:
     process.env.MEILI_SEARCH_API || "MTNlM2QyNjY4NzRhNjcwNWRjZTJjYjhi",
+  DASHBOARD_ORIGIN: process.env.DASHBOARD_ORIGIN || "http://localhost:3000",
 };
