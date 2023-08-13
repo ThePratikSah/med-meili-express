@@ -7,7 +7,7 @@ import {
 } from "../db/helpers/users/index.js";
 
 export async function auth(req, _, next) {
-  const token = req.cookies["api-auth"];
+  const token = req.headers["X-Access-Token"];
 
   if (!token) {
     throw new ErrorWithCode("Not authorized", 401);

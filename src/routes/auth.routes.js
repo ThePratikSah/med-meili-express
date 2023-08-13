@@ -31,12 +31,7 @@ router.post(
     const { _id } = user;
 
     const token = generateJWT(email, _id.toString());
-    res.cookie("api-auth", token, {
-      secure: false,
-      httpOnly: true,
-      expires: new Date(Date.now() + 8 * 3600000),
-    });
-    return res.status(201).json({ msg: "Authenticated" });
+    return res.status(201).json({ msg: "Authenticated", token });
   })
 );
 
@@ -61,7 +56,10 @@ router.post(
   "/signout",
   asyncHandler(auth),
   asyncHandler(async (_, res) => {
-    res.clearCookie("api-auth");
+    /**
+     * add token to redis as invalid token
+     * while making a new request check if that token exists in redis
+     */
     return res.json({ message: "Logged out!" });
   })
 );

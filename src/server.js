@@ -16,7 +16,8 @@ const corsOptions = {
   origin: env.DASHBOARD_ORIGIN, // This is the front-end origin
   credentials: true, // This is important.
   methods: "OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE",
-  allowedHeaders: "Content-Type, Authorization, X-Requested-With",
+  allowedHeaders:
+    "Content-Type, Authorization, X-Requested-With, X-Access-Token",
 };
 
 app.use(cors(corsOptions));
