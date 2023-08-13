@@ -10,7 +10,7 @@ import { redisConnect, redisDisconnect } from "./db/redis.js";
 const app = express();
 const port = 3000;
 
-app.use(cors());
+app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
