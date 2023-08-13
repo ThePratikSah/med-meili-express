@@ -17,7 +17,7 @@ const corsOptions = {
   credentials: true, // This is important.
   methods: "OPTIONS,GET,HEAD,PUT,PATCH,POST,DELETE",
   allowedHeaders:
-    "Content-Type, Authorization, X-Requested-With, X-Access-Token",
+    "Content-Type, Authorization, X-Requested-With, x-access-token",
 };
 
 app.use(cors(corsOptions));

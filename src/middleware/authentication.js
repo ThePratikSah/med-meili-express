@@ -7,7 +7,7 @@ import {
 } from "../db/helpers/users/index.js";
 
 export async function auth(req, _, next) {
-  const token = req.headers["X-Access-Token"];
+  const token = req.headers["x-access-token"];
 
   if (!token) {
     throw new ErrorWithCode("Not authorized", 401);
