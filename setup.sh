@@ -34,4 +34,7 @@ mongo --eval 'db.runCommand({ connectionStatus: 1 })'
 sudo apt update
 sudo apt install redis-server
 
+# Add env vars from env.example to .env
+cp env.example .env
+
 echo "Redis installed. Edit /etc/redis/redis.conf and set supervised to 'systemd'"
