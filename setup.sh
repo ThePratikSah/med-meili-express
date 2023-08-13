@@ -13,6 +13,12 @@ nvm install 16
 nvm alias default 16
 nvm use 16
 
+# Install yarn
+npm i -g yarn pm2
+
+# Install dependencies
+yarn
+
 # Installing MongoDB Community Edition
 curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
 apt-key list
