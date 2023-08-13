@@ -1,5 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import { router as categoriesRoute } from "./routes/category.routes.js";
 import { router as productsRoute } from "./routes/product.routes.js";
 import { router as authRoutes } from "./routes/auth.routes.js";
@@ -9,6 +10,7 @@ import { redisConnect, redisDisconnect } from "./db/redis.js";
 const app = express();
 const port = 3000;
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
