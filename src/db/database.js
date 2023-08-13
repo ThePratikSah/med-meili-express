@@ -24,16 +24,16 @@ export const connectDB = async () => {
     console.log("[MongoDB] Connection success");
 
     _db = client.db(env.DATABASE);
-    if (
-      _db.system.indexes
-        .find({ name: "email", ns: { $regex: ".collection$" } })
-        .count() == 0
-    ) {
-      _db
-        .collection(collections.user)
-        .createIndex({ email: 1 }, { unique: true });
-      console.log("[Index] Email indexed");
-    }
+    // if (
+    //   _db.system.indexes
+    //     .find({ name: "email", ns: { $regex: ".collection$" } })
+    //     .count() == 0
+    // ) {
+    //   _db
+    //     .collection(collections.user)
+    //     .createIndex({ email: 1 }, { unique: true });
+    //   console.log("[Index] Email indexed");
+    // }
   } catch (e) {
     console.error(`[MongoDB] Connection error: ${e}`);
     throw e;
