@@ -1,19 +1,18 @@
-import { Router, Response } from "express";
+import { Router } from "express";
 import {
   asyncHandler,
   compareHashPassword,
   generateJWT,
   hashPassword,
-} from "../utils";
-import { IAuthRequest, IRequest } from "../interface/auth";
-import { addNewUser, findUserByEmail } from "../db/helpers/users";
-import { auth } from "../middleware/authentication";
+} from "../utils/index.js";
+import { addNewUser, findUserByEmail } from "../db/helpers/users/index.js";
+import { auth } from "../middleware/authentication.js";
 
 export const router = Router();
 
 router.post(
   "/login",
-  asyncHandler(async (req: IAuthRequest, res: Response) => {
+  asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const user = await findUserByEmail(email);
@@ -43,7 +42,7 @@ router.post(
 
 router.post(
   "/signup",
-  asyncHandler(async (req: IAuthRequest, res: Response) => {
+  asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
     const _user = await findUserByEmail(email);
@@ -61,7 +60,7 @@ router.post(
 router.post(
   "/signout",
   asyncHandler(auth),
-  asyncHandler(async (req: IRequest, res: Response) => {
+  asyncHandler(async (_, res) => {
     res.clearCookie("api-auth");
     return res.json({ message: "Logged out!" });
   })

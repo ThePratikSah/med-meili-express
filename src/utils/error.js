@@ -5,9 +5,9 @@
  * return next(error);
  */
 export class ErrorWithCode extends Error {
-  status: number;
+  status;
 
-  constructor(message?: string, status?: number) {
+  constructor(message, status) {
     super(message); // Pass the message property to the Error constructor
 
     // Ensure the name of this error is the same as the class name

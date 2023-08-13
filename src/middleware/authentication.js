@@ -1,21 +1,19 @@
-import { Response, NextFunction } from "express";
-import { validateJWT } from "../utils";
-import { IDecodedTokenData, IRequest } from "../interface/auth";
-import { ErrorWithCode } from "../utils/error";
+import { validateJWT } from "../utils/index.js";
+import { ErrorWithCode } from "../utils/error.js";
 import {
   findUserById,
   getUserFromRedis,
   setUserInRedis,
-} from "../db/helpers/users";
+} from "../db/helpers/users/index.js";
 
-export async function auth(req: IRequest, _: Response, next: NextFunction) {
+export async function auth(req, _, next) {
   const token = req.cookies["api-auth"];
 
   if (!token) {
     throw new ErrorWithCode("Not authorized", 401);
   }
 
-  let decodedData: IDecodedTokenData;
+  let decodedData;
 
   try {
     decodedData = validateJWT(token);
@@ -32,10 +30,10 @@ export async function auth(req: IRequest, _: Response, next: NextFunction) {
       throw new ErrorWithCode("Not authorized", 401);
     }
     email = user?.email;
-    await setUserInRedis(_id, email!);
+    await setUserInRedis(_id, email);
   }
 
   req._id = _id;
-  req.email = email!;
+  req.email = email;
   next();
 }

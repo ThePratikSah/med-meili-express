@@ -1,4 +1,4 @@
-import { getDB } from "../../database";
+import { getDB } from "../../database.js";
 
 export async function getAllCategories() {
   const db = getDB();
@@ -6,11 +6,7 @@ export async function getAllCategories() {
   return await category.find().toArray();
 }
 
-export async function addNewCategory(
-  title: string,
-  desc: string,
-  imageUrl: string
-) {
+export async function addNewCategory(title, desc, imageUrl) {
   const db = getDB();
   const category = db.collection("Category");
   return await category.insertOne({

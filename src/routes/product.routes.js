@@ -1,15 +1,18 @@
-import { Router, Request, Response } from "express";
-import { asyncHandler } from "../utils";
-import { addNewProduct } from "../db/helpers/products";
-import { auth } from "../middleware/authentication";
-import { addProductToMeili, getProductsFromMeili } from "../utils/meilisearch";
+import { Router } from "express";
+import { asyncHandler } from "../utils/index.js";
+import { addNewProduct } from "../db/helpers/products/index.js";
+import { auth } from "../middleware/authentication.js";
+import {
+  addProductToMeili,
+  getProductsFromMeili,
+} from "../utils/meilisearch.js";
 
 export const router = Router();
 
 router.post(
   "/",
   asyncHandler(auth),
-  asyncHandler(async (req: Request, res: Response) => {
+  asyncHandler(async (req, res) => {
     const { title, description, price, sellingPrice, categoryId } = req.body;
     const { insertedId } = await addNewProduct(
       title,
@@ -25,8 +28,8 @@ router.post(
 
 router.get(
   "/",
-  asyncHandler(async (req: Request, res: Response) => {
-    const q = req.query.q as string;
+  asyncHandler(async (req, res) => {
+    const q = req.query.q;
     const result = await getProductsFromMeili(q);
     return res.status(200).json({ result });
   })

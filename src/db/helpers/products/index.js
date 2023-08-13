@@ -1,11 +1,11 @@
-import { getDB } from "../../database";
+import { getDB } from "../../database.js";
 
 export async function addNewProduct(
-  title: string,
-  description: string,
-  price: number,
-  sellingPrice: number,
-  categoryId: number
+  title,
+  description,
+  price,
+  sellingPrice,
+  categoryId
 ) {
   const db = getDB();
   const product = db.collection("Product");

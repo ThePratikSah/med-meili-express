@@ -1,9 +1,9 @@
-import { MongoClient, Db, ServerApiVersion } from "mongodb";
-import { env } from "../config/env";
-import { collections } from "./collections";
+import { MongoClient, ServerApiVersion } from "mongodb";
+import { env } from "../config/env.js";
+import { collections } from "./collections.js";
 
 const uri = env.DATABASE_URL;
-export let _db: Db;
+export let _db;
 export const connectDB = async () => {
   if (_db) {
     console.log("Already connected to database");
