@@ -9,7 +9,8 @@ router.get(
   "/get-user",
   asyncHandler(auth),
   asyncHandler(async (req, res) => {
-    const email = req.email;
-    return res.json({ data: await findUserByEmail(email) });
+    const userData = await findUserByEmail(req.email);
+    const { password, ...data } = userData;
+    return res.status(200).json({ data });
   })
 );
