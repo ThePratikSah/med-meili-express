@@ -25,7 +25,7 @@ export const connectDB = async () => {
 
     _db = client.db(env.DATABASE);
     if (
-      db.system.indexes
+      _db.system.indexes
         .find({ name: "email", ns: { $regex: ".collection$" } })
         .count() == 0
     ) {
