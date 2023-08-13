@@ -1,5 +1,6 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient } from "mongodb";
 import { env } from "../config/env.js";
+import { collections } from "./collections.js";
 
 const uri = env.DATABASE_URL;
 export let _db;
