@@ -46,7 +46,7 @@ export const seedData = {
     await _db.collection(collections.product).insertMany(seedData.products);
 
     console.log("[SEED] Data seeding 🌱 completed");
-    process.exit(1);
+    process.exit();
   } catch (error) {
     console.log("[SEED] Failed to seed data with ", error);
   }
