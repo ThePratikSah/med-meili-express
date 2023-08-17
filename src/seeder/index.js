@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
-import { connectDB, getDB } from "../src/db/database";
+import { connectDB, getDB } from "../db/database.js";
+import { collections } from "../db/collections.js";
 
 const categories = [];
 const products = [];
