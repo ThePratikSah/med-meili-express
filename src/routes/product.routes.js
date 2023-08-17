@@ -1,11 +1,8 @@
 import { Router } from "express";
 import { asyncHandler } from "../utils/index.js";
-import { addNewProduct } from "../db/helpers/products/index.js";
+import { addNewProduct, getAllProducts } from "../db/helpers/products/index.js";
 import { auth } from "../middleware/authentication.js";
-import {
-  addProductToMeili,
-  getProductsFromMeili,
-} from "../utils/meilisearch.js";
+import { addProductToMeili } from "../utils/meilisearch.js";
 
 export const router = Router();
 
@@ -26,11 +23,11 @@ router.post(
   })
 );
 
+// TODO: add skip and limit in future release
 router.get(
   "/",
-  asyncHandler(async (req, res) => {
-    const q = req.query.q;
-    const result = await getProductsFromMeili(q);
-    return res.status(200).json({ result });
+  asyncHandler(auth),
+  asyncHandler(async (_req, res) => {
+    return res.json({ data: await getAllProducts() });
   })
 );

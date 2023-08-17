@@ -1,3 +1,4 @@
+import { collections } from "../../collections.js";
 import { getDB } from "../../database.js";
 
 export async function addNewProduct(
@@ -8,7 +9,7 @@ export async function addNewProduct(
   categoryId
 ) {
   const db = getDB();
-  const product = db.collection("Product");
+  const product = db.collection(collections.product);
   return await product.insertOne({
     title,
     description,
@@ -16,4 +17,10 @@ export async function addNewProduct(
     sellingPrice,
     categoryId,
   });
+}
+
+export async function getAllProducts() {
+  const db = getDB();
+  const product = db.collection(collections.product);
+  return await product.find().toArray();
 }
