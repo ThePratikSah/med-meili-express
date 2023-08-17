@@ -15,3 +15,9 @@ export async function addNewCategory(title, desc, imageUrl) {
     imageUrl,
   });
 }
+
+export async function addMultipleCategories(categories) {
+  const db = getDB();
+  const category = db.collection("Category");
+  return await category.insertMany(categories);
+}

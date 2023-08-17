@@ -12,13 +12,11 @@ export const connectDB = async () => {
 
   try {
     const client = new MongoClient(uri);
-
     await client.connect();
 
     console.log("[MongoDB] Connection success");
 
     _db = client.db(env.DATABASE);
-
     _db
       .collection(collections.user)
       .createIndex({ email: 1 }, { unique: true });
