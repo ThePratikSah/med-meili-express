@@ -38,11 +38,16 @@ export const seedData = {
 };
 
 (async () => {
-  await connectDB();
-  const _db = getDB();
+  try {
+    await connectDB();
+    const _db = getDB();
 
-  await _db.collection(collections.category).insertMany(seedData.categories);
-  await _db.collection(collections.product).insertMany(seedData.products);
+    await _db.collection(collections.category).insertMany(seedData.categories);
+    await _db.collection(collections.product).insertMany(seedData.products);
 
-  console.log("[SEED] Data seeding 🌱 completed");
+    console.log("[SEED] Data seeding 🌱 completed");
+    process.exit(1);
+  } catch (error) {
+    console.log("[SEED] Failed to seed data with ", error);
+  }
 })();
